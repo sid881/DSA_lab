@@ -15,9 +15,9 @@
      for(int i=0;i<n;i++){
          scanf("%d",&a[i]);
      }
-     int left=1;
-     int right=1000000;
-     while(left<right){
+     int left=0;
+     int right=n-1;
+     while(left<=right){
          int mid=(left+right)/2;
          if(is_possible(a,k,n,mid)){
              left=mid+1;
@@ -27,4 +27,5 @@
          }
      }
      printf("%d",ans);
+     return 0;
  }
