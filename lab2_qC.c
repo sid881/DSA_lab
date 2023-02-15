@@ -1,88 +1,56 @@
-#include<stdlib.h>
 #include<stdio.h>
-#include<stdbool.h>
-    struct node{
-     struct node* prev;
-     int data;
-     struct node *next;
-    };
-    
-void targetSum(struct node* head,int x){
+#include<stdlib.h>
+struct node{
+    struct node*prev,*next;
+    int data;
+};
+int targetSum(struct node* head,int target){
     struct node* ptr, *ptr2;
+    int count=0;
     ptr = head;
-    
-    
     ptr2=head;
     while(ptr2->next!=NULL)
         ptr2=ptr2->next;
-        
-    
     while(ptr!=ptr2 && ptr2->next!=ptr){
-            
-
-       if(ptr->data+ptr2->data==x){
-        ptr2=ptr2->prev;
-       ptr=ptr->next;
-       
+       if(ptr->data+ptr2->data==target){
+       count=1;
+       break;
        }else{
-           if(ptr->data+ptr2->data<x){
+           if(ptr->data+ptr2->data<target){
                ptr=ptr->next;
            }else{
                ptr2=ptr2->prev;
            }
-           
        }
        
     }
-    
+    return count;
 }
- 
-     struct node *addToEmpty (struct node *head, int data){
-      struct node *temp = (struct node *) malloc (sizeof (struct node));
-      temp->prev = NULL;
-      temp->data = data;
-      temp->next = NULL;
-      head = temp;
-       return head;
-      }
-    
-    
-     struct node *addToEnd (struct node *head, int data){
-      struct node *temp = malloc (sizeof (struct node));
-      struct node *tp;
-      temp->prev = NULL;
-      temp->data = data;
-      temp->next = NULL;
-      tp=head;
-      while(tp->next!=NULL)
-      tp=tp->next;
-      tp->next=temp;
-      temp->prev=tp;
-
-     return head;
-         }
-struct node* createList(struct node* head){
-    int n,data,i;
-    int skip;
-    scanf("%d",&n);
-    scanf("%d",&data);
-    head=addToEmpty(head,data);
-    for(i=0;i<n-1;i++){
-        scanf("%d",&data);
-       head=addToEnd(head,data);
-    }
-
-    return head;
+struct node*createlist(struct node* head){
+  int n,data;
+  scanf("%d",&n);
+  scanf("%d",&data);
+  struct node* temp=malloc(sizeof(struct node));
+    temp->prev=NULL;
+    temp->data=data;
+    temp->next=NULL;
+    head=temp;
+  for(int i=0;i<n-1;i++){
+      scanf("%d",&data);
+      struct node* tp=malloc(sizeof(struct node));
+    tp->data=data;
+    tp->prev=temp;
+    temp->next=tp;
+    temp=temp->next;
+  }
+  return head;
 }
- int main () 
-{
+int main(){
     int target;
+    struct node*head,*ptr;
     scanf("%d",&target);
-   struct node *head = NULL;
-    struct node *ptr;
+    head=createlist(head);
+    ptr=head;
+    printf("%d",targetSum(head,target));
     
-   head=createList(head);
-   ptr = head;
-   targetSum(head,target);
-  return 0;
 }
